@@ -92,7 +92,7 @@ def main():
     device = 'cuda:0'
     
     ### === TODO: Load your model (you may change this part) ===
-    model_name = "meta-llama/Llama-3.2-3B-Instruct"   
+    model_name = "zbyzby/Llama3.2-3B-Instruct-QLoRA-finetuned"   
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         torch_dtype=torch.float16,
