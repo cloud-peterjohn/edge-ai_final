@@ -28,3 +28,8 @@ pip3 install torch torchvision torchaudio
 ```bash
 sh install_packages.sh
 ```
+
+- Run
+```bash
+python  ./result.py
+```
