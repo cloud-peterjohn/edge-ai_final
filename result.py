@@ -106,10 +106,15 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
     # === (Optional) Uncomment the following lines if using the custom generate() function. ===
+    import os
+    os.environ["TORCHINDUCTOR_MAX_AUTOTUNE_TRIALS"] = "10"
+    torch.backends.cuda.enable_mem_efficient_sdp(True)
+    torch.backends.cudnn.benchmark = True
+    
     model.prefill_forward = model.forward
-
     model.forward = torch.compile(
         model.forward,
+        backend="inductor",
         mode='max-autotune',
         dynamic=False,
         fullgraph=True
