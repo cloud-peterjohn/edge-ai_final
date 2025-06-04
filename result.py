@@ -12,8 +12,6 @@ from hqq.utils.patching import recommended_inductor_config_setter
 
 from quant_cfg import get_quant_config_slm
 
-from torch._inductor.config import recommended_inductor_config_setter
-
 
 
 #####################################################################
@@ -109,7 +107,7 @@ def main():
     
     # === (Optional) Uncomment the following lines if using the custom generate() function. ===
     model.prefill_forward = model.forward
-    recommended_inductor_config_setter(model)
+
     model.forward = torch.compile(
         model.forward,
         mode='max-autotune',
