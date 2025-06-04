@@ -12,6 +12,15 @@ from hqq.utils.patching import recommended_inductor_config_setter
 
 from quant_cfg import get_quant_config_slm
 
+from torch._inductor import config
+
+config.coordinate_descent_tuning = True  
+config.fast_multiply = True  
+config.split_tuning = True 
+config.enable_cudagraphs = True 
+config.triton_autotune = True  
+
+
 #####################################################################
 # === SPEC NOTICE ===
 # Only "load model" and "generate" function selection can be modified.
@@ -111,7 +120,7 @@ def main():
         dynamic=False,
         fullgraph=True
     )
-
+    
     # Quantize
     print(f"Model Size Before Quant: {get_size_of_model(model)} MB")
     quant_config = get_quant_config_slm(model)
@@ -144,7 +153,7 @@ def main():
     past_key_values = StaticCache(
         config=model.config, 
         max_batch_size=1, 
-        max_cache_len=max_new_tokens + 16, 
+        max_cache_len=max_new_tokens + 64, 
         device=model.device, 
         dtype=torch.float16
     )
